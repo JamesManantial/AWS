@@ -1,0 +1,130 @@
+===========
+S3
+============
+
+--Simple
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "s3:*",
+            "Resource": "*"
+        }
+    ]
+}
+
+--Politicas simples S3 con bucket
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Action": ["s3:ListBucket"],
+        "Effect": "Allow",
+        "Resource": ["arn:aws:s3:::la-homefolders-bucket"],
+        "Condition": {"StringLike": {"s3:prefix": ["testuser/*"]}}
+      },
+      {
+        "Action": [
+          "s3:GetObject",
+          "s3:PutObject"
+        ],
+        "Effect": "Allow",
+        "Resource": ["arn:aws:s3:::la-homefolders-bucket/testuser/*"]
+      }
+    ]
+  }
+
+
+  --PoliticaBucket
+  {
+    "Version":"2012-10-17",
+    "Statement":[
+       {
+          "Effect":"Allow",
+          "Action":[
+             "s3:ListAllMyBuckets"
+          ],
+          "Resource":"arn:aws:s3:::*"
+       },
+       {
+          "Effect":"Allow",
+          "Action":[
+             "s3:ListBucket",
+             "s3:GetBucketLocation"
+          ],
+          "Resource":"arn:aws:s3:::la-homefolders-bucket"
+       },
+       {
+          "Effect":"Allow",
+          "Action":[
+             "s3:PutObject",
+             "s3:PutObjectAcl",
+             "s3:GetObject",
+             "s3:GetObjectAcl",
+             "s3:DeleteObject"
+          ],
+          "Resource":"arn:aws:s3:::la-homefolders-bucket/*"
+       }
+    ]
+ }
+
+ --Politica con restriccion horaria
+ {
+    "Version":"2012-10-17",
+    "Statement":[
+       {
+          "Effect":"Allow",
+          "Action":[
+             "s3:ListAllMyBuckets"
+          ],
+          "Resource":"arn:aws:s3:::*",
+          "Condition": {
+             "DateGreaterThan" : {
+                "aws:CurrentTime" : "2019-01-17T01:00:00Z"
+              }
+           }
+       },
+       {
+          "Effect":"Allow",
+          "Action":[
+             "s3:ListBucket",
+             "s3:GetBucketLocation"
+          ],
+          "Resource":"arn:aws:s3:::la-homefolders-bucket"
+       },
+       {
+          "Effect":"Allow",
+          "Action":[
+             "s3:PutObject",
+             "s3:PutObjectAcl",
+             "s3:GetObject",
+             "s3:GetObjectAcl",
+             "s3:DeleteObject"
+          ],
+          "Resource":"arn:aws:s3:::la-homefolders-bucket/*"
+       }
+    ]
+ }
+
+
+ --Politica con variables
+ {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Action": ["s3:ListBucket"],
+        "Effect": "Allow",
+        "Resource": ["arn:aws:s3:::la-homefolders-bucket"],
+        "Condition": {"StringLike": {"s3:prefix": ["${aws:username}/*"]}}
+      },
+      {
+        "Action": [
+          "s3:GetObject",
+          "s3:PutObject"
+        ],
+        "Effect": "Allow",
+        "Resource": ["arn:aws:s3:::la-homefolders-bucket/${aws:username}/*"]
+      }
+    ]
+  }
