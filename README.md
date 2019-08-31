@@ -1,1 +1,1 @@
-# Este repositorio servisa para copiar scripts relacionados a Oracle, AWS , etc,
+# Este repositorio servira para copiar scripts relacionados a Oracle, AWS , etc,
