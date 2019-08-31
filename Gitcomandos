@@ -1,0 +1,8 @@
+--Para adicionar archivos
+git add .
+
+--Para hacer commit
+git commit -m "texto"
+
+--Para llevar al github
+git push
